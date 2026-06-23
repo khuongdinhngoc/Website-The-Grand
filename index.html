@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Georgia Pro';src:url('assets/fonts/GeorgiaPro-Reg.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Georgia Pro';src:url('assets/fonts/GeorgiaPro-It.ttf') format('truetype');font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:'Georgia Pro';src:url('assets/fonts/GeorgiaPro-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Georgia Pro';src:url('assets/fonts/GeorgiaPro-Bold.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Georgia Pro';src:url('assets/fonts/GeorgiaPro-Light.ttf') format('truetype');font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:'Domaine Display';src:url('assets/fonts/iCielDomaineDisplay-Medium.otf') format('opentype');font-weight:400 600;font-style:normal;font-display:swap}
+@font-face{font-family:'Ameyallinda';src:url('assets/fonts/SVN-Ameyallinda-Signature.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Corinthiago';src:url('assets/fonts/TH-Corinthiago.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Zona Pro';src:url('assets/fonts/SVN-ZonaPro-Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Zona Pro';src:url('assets/fonts/SVN-ZonaPro-SemiBold.otf') format('opentype');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Zona Pro';src:url('assets/fonts/SVN-ZonaPro-Bold.otf') format('opentype');font-weight:700;font-style:normal;font-display:swap}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Zona Pro','Georgia Pro',system-ui,sans-serif;color:#233B2A;background:#F6F3EC;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:#9CAD5F;color:#1c2f22}
+.rv{opacity:0;transform:translateY(28px)}
+@keyframes rvin{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}
+@keyframes kb{0%{transform:scale(1.04) translate(0,0)}100%{transform:scale(1.16) translate(-1.5%,-1.5%)}}
+@keyframes cue{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(9px);opacity:1}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes sheen{0%{background-position:-180% 0}100%{background-position:180% 0}}
+.a2-menu a{position:relative}
+.a2-menu a::after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:1px;background:currentColor;transition:right .4s cubic-bezier(.16,.72,.27,1)}
+.a2-menu a:hover::after{right:0}
+.docrow:hover .docgo{transform:translateX(5px)}
+.prodcard:hover .prodimg>div{transform:scale(1.07)}
+.newscard:hover .newsimg>div{transform:scale(1.06)}
+.zone{cursor:pointer;transition:transform .3s,box-shadow .3s}
+.zone:hover{transform:translateY(-3px)}
+input:focus,textarea:focus{outline:none;border-color:#708573 !important}
+</style>
+</helmet>
+
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#36573B"/><text x="50" y="62" font-family="Georgia,serif" font-size="40" font-weight="700" fill="#F6F3EC" text-anchor="middle">A2</text></svg></template>
+<div id="a2root" style="position:relative;width:100%;overflow-x:hidden;background:#F6F3EC">
+
+<!-- grain / film texture overlay (original) -->
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:200;pointer-events:none;mix-blend-mode:soft-light;opacity:.42;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22140%22 height=%22140%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%222%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22 opacity=%220.55%22/%3E%3C/svg%3E');background-size:140px 140px"></div>
+
+<!-- ============ STICKY NAV ============ -->
+<header id="a2nav" style="position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,56px);transition:background .5s,box-shadow .5s,padding .5s;color:#fff">
+  <a href="#top" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;line-height:1">
+    <span style="font-family:'Georgia Pro',Georgia,serif;font-size:30px;font-weight:700;letter-spacing:.04em">A2</span>
+    <span class="navsub" style="font:600 8.5px/1 'Zona Pro';letter-spacing:.34em;margin-top:5px;opacity:.85">PHÂN KHU · HỒ TRÀM</span>
+  </a>
+  <nav class="a2-menu" style="display:flex;align-items:center;gap:clamp(14px,1.9vw,30px);font:600 12px/1 'Zona Pro';letter-spacing:.04em">
+    <a href="#gioithieu" data-i18n="nav.about" style="color:inherit;text-decoration:none">Giới thiệu</a>
+    <a href="#vitri" data-i18n="nav.location" style="color:inherit;text-decoration:none">Vị trí</a>
+    <a href="#tienich" data-i18n="nav.amenities" style="color:inherit;text-decoration:none">Tiện ích</a>
+    <a href="#sanpham" data-i18n="nav.products" style="color:inherit;text-decoration:none">Sản phẩm</a>
+    <a href="#matbang" data-i18n="nav.floorplan" style="color:inherit;text-decoration:none">Mặt bằng tiện ích</a>
+    <a href="#tailieu" data-i18n="nav.docs" style="color:inherit;text-decoration:none">Tài liệu marketing</a>
+    <a href="#tintuc" data-i18n="nav.news" style="color:inherit;text-decoration:none">Tin tức</a>
+  </nav>
+  <div style="display:flex;align-items:center;gap:16px">
+    <div style="display:flex;align-items:center;gap:7px;font:700 11px/1 'Zona Pro';letter-spacing:.08em">
+      <button data-action="lang" data-lang="vi" style="background:none;border:none;color:inherit;cursor:pointer;font:inherit;opacity:1">VI</button>
+      <span style="opacity:.5">/</span>
+      <button data-action="lang" data-lang="en" style="background:none;border:none;color:inherit;cursor:pointer;font:inherit;opacity:.55">EN</button>
+    </div>
+    <a href="#lienhe" data-i18n="nav.cta" style="text-decoration:none;color:#fff;background:#B7995A;padding:10px 18px;border-radius:2px;font:700 11px/1 'Zona Pro';letter-spacing:.08em">Đăng ký tư vấn</a>
+  </div>
+</header>
+
+<div id="top"></div>
+
+<!-- ============ PROPOSAL INTRO FRAMES ============ -->
+<section id="introframes">
+
+<!-- Cover -->
+<div style="position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:104px clamp(24px,7vw,120px);background:radial-gradient(120% 120% at 80% 10%,#3a5b40 0%,#2c4733 45%,#20351f 100%);color:#F6F3EC;overflow:hidden">
+  <div data-parallax="0.12" style="position:absolute;right:-6%;top:-10%;width:60vw;height:60vw;max-width:760px;max-height:760px;border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(156,173,95,.22),transparent 62%);pointer-events:none"></div>
+  <div style="position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(transparent,rgba(246,243,236,.25),transparent);left:clamp(24px,7vw,120px)"></div>
+  <div class="rv" style="font:700 11px/1 'Zona Pro';letter-spacing:.42em;color:#B7995A;margin-bottom:28px">ĐỀ XUẤT THIẾT KẾ WEBSITE — 2026</div>
+  <div class="rv d1" style="font-family:'Ameyallinda',cursive;font-size:clamp(34px,5vw,68px);color:#9CAD5F;line-height:.9;margin-bottom:6px">Giữa rừng &amp; biển</div>
+  <h1 class="rv d2" style="margin:0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(46px,9vw,128px);line-height:.94;letter-spacing:.01em">PHÂN KHU A2</h1>
+  <div class="rv d3" style="font-family:'Domaine Display','Georgia Pro',serif;font-style:italic;font-size:clamp(20px,2.6vw,34px);color:rgba(246,243,236,.78);margin-top:10px">The Grand Ho Tram · Hồ Tràm Beach</div>
+  <p class="rv d4" data-i18n="cover.desc" style="max-width:560px;margin:30px 0 0;font:300 16px/1.7 'Zona Pro';color:rgba(246,243,236,.72)">Đề xuất bố cục, tuyến nội dung và chuyển động cho website phân khu nghỉ dưỡng biển A2 — kế thừa hệ sinh thái The Grand Ho Tram, đồng bộ ngôn ngữ thương hiệu với Maia.</p>
+  <div class="rv d5" style="display:flex;gap:40px;margin-top:48px;flex-wrap:wrap">
+    <div><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:34px;font-weight:600;color:#fff">12</div><div data-i18n="cover.m1" style="font:600 10px/1.4 'Zona Pro';letter-spacing:.18em;color:rgba(246,243,236,.6);text-transform:uppercase;margin-top:4px">Phân vùng nội dung</div></div>
+    <div><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:34px;font-weight:600;color:#fff">2</div><div data-i18n="cover.m2" style="font:600 10px/1.4 'Zona Pro';letter-spacing:.18em;color:rgba(246,243,236,.6);text-transform:uppercase;margin-top:4px">Ngôn ngữ VI / EN</div></div>
+    <div><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:34px;font-weight:600;color:#fff">3</div><div data-i18n="cover.m3" style="font:600 10px/1.4 'Zona Pro';letter-spacing:.18em;color:rgba(246,243,236,.6);text-transform:uppercase;margin-top:4px">Phương án hero</div></div>
+  </div>
+  <div style="position:absolute;bottom:34px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px">
+    <span data-i18n="cover.scroll" style="font:600 9px/1 'Zona Pro';letter-spacing:.3em;color:rgba(246,243,236,.55)">CUỘN ĐỂ XEM</span>
+    <span style="width:1px;height:30px;background:rgba(246,243,236,.4);animation:cue 1.8s ease-in-out infinite"></span>
+  </div>
+</div>
+
+<!-- Context: master plan -->
+<div style="position:relative;padding:clamp(70px,9vw,130px) clamp(24px,7vw,120px);background:url(assets/bg/Yellow-01.png) center/cover no-repeat,#FBFAF6">
+  <div style="display:grid;grid-template-columns:1fr;gap:54px;max-width:1280px;margin:0 auto">
+    <div style="max-width:680px">
+      <div class="rv" style="font:700 11px/1 'Zona Pro';letter-spacing:.34em;color:#B7995A;margin-bottom:18px">BỐI CẢNH DỰ ÁN</div>
+      <h2 class="rv d1" style="margin:0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(30px,4.4vw,52px);line-height:1.06">
+        <span style="display:block;font-family:'Ameyallinda',cursive;color:#708573;font-weight:400;font-size:1em;line-height:.8">Một phân khu mới</span><span style="display:block;margin-left:1.2em;margin-top:.08em">trong đại đô thị<br><span style="white-space:nowrap">The Grand Ho Tram</span></span>
+      </h2>
+      <p class="rv d2" data-i18n="ctx.p" style="margin:24px 0 0;font:300 16px/1.8 'Zona Pro';color:#4a5b4d;max-width:600px">A2 nằm ngay cạnh Maia Resort, cùng chủ đầu tư và cùng tuyến biển vàng Hồ Tràm. Vì vậy website A2 kế thừa cấu trúc, tuyến nội dung và bố cục đã được kiểm chứng của Maia — đảm bảo nhận diện đồng bộ trong cùng hệ sinh thái.</p>
+    </div>
+    <div class="rv d2" style="position:relative;border-radius:4px;overflow:hidden;background:#0e1f15;box-shadow:0 30px 70px -30px rgba(35,59,42,.5)">
+      <img src="assets/mat-bang-tong-the.jpg" alt="Sơ đồ tổng thể The Grand Ho Tram - Phân khu A2" style="display:block;width:100%;height:auto">
+      <div style="position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(transparent,rgba(14,31,21,.55));pointer-events:none"></div>
+      <span style="position:absolute;left:20px;bottom:16px;font:600 11px/1 'Zona Pro';letter-spacing:.2em;color:#fff;text-transform:uppercase">Sơ đồ tổng thể — Phân khu A2 cạnh Maia</span>
+    </div>
+  </div>
+</div>
+
+<!-- Approach / Sitemap -->
+<div style="position:relative;padding:clamp(70px,9vw,130px) clamp(24px,7vw,120px);background:#36573B;color:#F6F3EC">
+  <div style="max-width:1280px;margin:0 auto">
+    <div class="rv" style="text-align:center;font:700 11px/1 'Zona Pro';letter-spacing:.34em;color:#9CAD5F;margin-bottom:18px">CÁCH TIẾP CẬN</div>
+    <h2 class="rv d1" style="text-align:center;margin:0 0 14px;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(28px,4vw,50px)"><span style="display:block;font-family:'Ameyallinda',cursive;color:#9CAD5F;font-weight:400;font-size:1em;line-height:.8">Sơ đồ</span><span style="display:block;margin-top:.06em">website đề xuất</span></h2>
+    <p class="rv d2" data-i18n="map.sub" style="text-align:center;max-width:620px;margin:0 auto 56px;font:300 15px/1.7 'Zona Pro';color:rgba(246,243,236,.7)">Giữ nguyên tuyến nội dung Maia, đồng thời nâng cấp 3 điểm theo yêu cầu vận hành.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:48px">
+      <div class="rv d1" style="border:1px solid rgba(246,243,236,.18);border-radius:3px;padding:22px 20px"><div style="font:700 10px/1 'Zona Pro';letter-spacing:.2em;color:#B7995A;margin-bottom:12px">01 · TRANG CHỦ</div><div style="font:400 14px/1.9 'Zona Pro';color:rgba(246,243,236,.85)">Hero · Giới thiệu · Vị trí · Tiện ích · Sản phẩm · Thư viện · Tin tức · Đăng ký</div></div>
+      <div class="rv d2" style="border:1px solid rgba(246,243,236,.18);border-radius:3px;padding:22px 20px"><div style="font:700 10px/1 'Zona Pro';letter-spacing:.2em;color:#B7995A;margin-bottom:12px">02 · TRANG CON</div><div style="font:400 14px/1.9 'Zona Pro';color:rgba(246,243,236,.85)">Giới thiệu · Vị trí · Tiện ích · Sản phẩm (Căn hộ / Biệt thự) · Liên hệ</div></div>
+      <div class="rv d3" style="border:1px solid rgba(246,243,236,.18);border-radius:3px;padding:22px 20px"><div style="font:700 10px/1 'Zona Pro';letter-spacing:.2em;color:#B7995A;margin-bottom:12px">03 · TIỆN ÍCH WEB</div><div style="font:400 14px/1.9 'Zona Pro';color:rgba(246,243,236,.85)">Song ngữ VI/EN · Form tư vấn · Widget liên hệ nổi · Tải tài liệu</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
+      <div class="rv d1" style="background:rgba(246,243,236,.06);border-radius:3px;padding:26px 24px"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:22px;font-weight:600;color:#fff;margin-bottom:8px">Mặt bằng tiện ích</div><p data-i18n="map.c1" style="margin:0;font:300 13.5px/1.7 'Zona Pro';color:rgba(246,243,236,.72)">Thay cho "VR360": sơ đồ phân khu → chọn tầng → xem các căn → mở gallery. Đúng bản chất cấu trúc &amp; mặt bằng căn hộ.</p></div>
+      <div class="rv d2" style="background:rgba(246,243,236,.06);border-radius:3px;padding:26px 24px"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:22px;font-weight:600;color:#fff;margin-bottom:8px">Tài liệu marketing</div><p data-i18n="map.c2" style="margin:0;font:300 13.5px/1.7 'Zona Pro';color:rgba(246,243,236,.72)">Tab riêng để khách hàng &amp; đại lý sale tải brochure, catalogue, leaflet, social post về sử dụng.</p></div>
+      <div class="rv d3" style="background:rgba(246,243,236,.06);border-radius:3px;padding:26px 24px"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:22px;font-weight:600;color:#fff;margin-bottom:8px">Liên hệ nhanh</div><p data-i18n="map.c3" style="margin:0;font:300 13.5px/1.7 'Zona Pro';color:rgba(246,243,236,.72)">Icon chạy dọc bên hông, bấm mở Hotline · Chat · Zalo — giữ như Maia.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Divider into demo -->
+<div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:64px 20px 10px;background:#F6F3EC">
+  <span style="font:700 10px/1 'Zona Pro';letter-spacing:.4em;color:#B7995A">BẢN DEMO TRANG CHỦ</span>
+  <span style="font-family:'Domaine Display','Georgia Pro',serif;font-size:34px;font-weight:600;color:#36573B">Homepage Demo</span>
+  <svg width="140" height="16" viewBox="0 0 140 16" fill="none" aria-hidden="true"><path d="M0 8 Q11.6 1 23.3 8 T46.6 8 T70 8 T93.3 8 T116.6 8 T140 8" stroke="#B7995A" stroke-width="1.5" opacity="0.7"/></svg>
+</div>
+</section>
+
+<!-- ============ HERO (3 VARIANTS) ============ -->
+<section id="hero" style="position:relative">
+
+  <!-- Variant A: full-bleed carousel -->
+  <div id="heroA" style="position:relative;height:100vh;min-height:620px;overflow:hidden">
+    <div class="hslide" data-i="0" style="position:absolute;inset:0;opacity:1;transition:opacity 1.6s ease"><img src="assets/img/aerial-3.jpg" alt="Hoàng hôn The Grand Ho Tram" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 9s ease-in-out infinite alternate"></div>
+    <div class="hslide" data-i="1" style="position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease"><img src="assets/img/balcony-view.jpg" alt="View biển từ căn hộ A2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 9s ease-in-out infinite alternate"></div>
+    <div class="hslide" data-i="2" style="position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease"><img src="assets/img/aerial-2.jpg" alt="Toàn cảnh tuyến biển Hồ Tràm" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 9s ease-in-out infinite alternate"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,38,26,.42) 0%,rgba(20,38,26,.12) 40%,rgba(20,38,26,.62) 100%)"></div>
+    <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(42% 52% at 16% 20%,rgba(255,244,214,.20),transparent 62%),radial-gradient(36% 46% at 84% 28%,rgba(173,200,120,.16),transparent 62%),radial-gradient(60% 44% at 60% 92%,rgba(15,32,20,.42),transparent 72%);animation:floaty 10s ease-in-out infinite"></div>
+    <div aria-hidden="true" style="position:absolute;left:-6%;top:-8%;width:46%;height:80%;pointer-events:none;opacity:.5;background:repeating-conic-gradient(from 130deg at 50% 0%,rgba(15,32,20,.16) 0deg 5deg,transparent 5deg 16deg);filter:blur(8px);transform-origin:top"></div>
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:#fff;padding:0 24px">
+      <div class="rv" style="font:700 11px/1 'Zona Pro';letter-spacing:.4em;margin-bottom:22px;color:rgba(255,255,255,.9)">PHÂN KHU A2 · THE GRAND HO TRAM</div>
+      <div class="rv d1" style="font-family:'Ameyallinda',cursive;font-size:clamp(40px,6vw,82px);line-height:.85;color:#fff;text-shadow:0 4px 30px rgba(0,0,0,.3)">Nơi rừng chạm biển</div>
+      <h2 class="rv d2" data-i18n="hero.title" style="margin:8px 0 0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(30px,5.2vw,72px);line-height:1;letter-spacing:.02em">MỘT CHỐN AN TRÚ CHO GIA ĐÌNH</h2>
+      <p class="rv d3" data-i18n="hero.desc" style="max-width:540px;margin:26px 0 0;font:300 16px/1.7 'Zona Pro';color:rgba(255,255,255,.85)">Căn hộ &amp; biệt thự biển trực diện đại dương, sống giữa thiên nhiên rừng và biển Hồ Tràm.</p>
+      <div class="rv d4" style="display:flex;gap:14px;margin-top:38px;flex-wrap:wrap;justify-content:center">
+        <a href="#gioithieu" data-i18n="hero.cta1" style="text-decoration:none;background:#fff;color:#36573B;padding:15px 30px;border-radius:2px;font:700 12px/1 'Zona Pro';letter-spacing:.06em">Khám phá A2</a>
+        <a href="#lienhe" data-i18n="hero.cta2" style="text-decoration:none;border:1px solid rgba(255,255,255,.6);color:#fff;padding:15px 30px;border-radius:2px;font:700 12px/1 'Zona Pro';letter-spacing:.06em">Đăng ký tư vấn</a>
+      </div>
+    </div>
+    <div id="hdots" style="position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;gap:10px">
+      <span data-dot="0" style="width:28px;height:3px;background:#fff;border-radius:2px;cursor:pointer;transition:opacity .4s"></span>
+      <span data-dot="1" style="width:28px;height:3px;background:rgba(255,255,255,.45);border-radius:2px;cursor:pointer;transition:opacity .4s"></span>
+      <span data-dot="2" style="width:28px;height:3px;background:rgba(255,255,255,.45);border-radius:2px;cursor:pointer;transition:opacity .4s"></span>
+    </div>
+  </div>
+
+  <!-- Variant B: split -->
+  <div id="heroB" style="display:none;height:100vh;min-height:620px;background:#FBFAF6">
+    <div style="display:grid;grid-template-columns:1fr 1.1fr;height:100%">
+      <div style="display:flex;flex-direction:column;justify-content:center;padding:0 clamp(28px,5vw,90px)">
+        <div class="rv" style="font:700 11px/1 'Zona Pro';letter-spacing:.34em;color:#B7995A;margin-bottom:22px">PHÂN KHU A2 · HỒ TRÀM</div>
+        <div class="rv d1" style="font-family:'Ameyallinda',cursive;font-size:clamp(36px,4.6vw,66px);line-height:.85;color:#708573">Nơi rừng chạm biển</div>
+        <h2 class="rv d2" data-i18n="hero.title" style="margin:6px 0 0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(34px,4.4vw,64px);line-height:1.02;color:#233B2A">MỘT CHỐN AN TRÚ CHO GIA ĐÌNH</h2>
+        <p class="rv d3" data-i18n="hero.desc" style="max-width:440px;margin:24px 0 0;font:300 16px/1.8 'Zona Pro';color:#4a5b4d">Căn hộ &amp; biệt thự biển trực diện đại dương, sống giữa thiên nhiên rừng và biển Hồ Tràm.</p>
+        <div class="rv d4" style="display:flex;gap:14px;margin-top:36px;flex-wrap:wrap">
+          <a href="#gioithieu" data-i18n="hero.cta1" style="text-decoration:none;background:#36573B;color:#fff;padding:15px 30px;border-radius:2px;font:700 12px/1 'Zona Pro';letter-spacing:.06em">Khám phá A2</a>
+          <a href="#lienhe" data-i18n="hero.cta2" style="text-decoration:none;border:1px solid #36573B;color:#36573B;padding:15px 30px;border-radius:2px;font:700 12px/1 'Zona Pro';letter-spacing:.06em">Đăng ký tư vấn</a>
+        </div>
+      </div>
+      <div style="position:relative;overflow:hidden;margin:24px 24px 24px 0;border-radius:4px">
+        <img data-parallax="0.08" src="assets/img/balcony-view.jpg" alt="Phối cảnh A2 Ocean Front" style="position:absolute;top:-8%;left:-8%;width:116%;height:116%;object-fit:cover">
+        <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div>
+        <span style="position:absolute;left:18px;bottom:16px;font:500 10px/1 'Zona Pro';letter-spacing:.2em;color:rgba(255,255,255,.85);text-transform:uppercase">Phối cảnh A2 — Ocean Front</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Variant C: editorial -->
+  <div id="heroC" style="display:none;position:relative;height:100vh;min-height:620px;overflow:hidden">
+    <img data-parallax="0.06" src="assets/img/aerial-3.jpg" alt="Hoàng hôn Hồ Tràm" style="position:absolute;top:-6%;left:-6%;width:112%;height:112%;object-fit:cover">
+    <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.04) 0 2px,transparent 2px 18px)"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,38,26,.55),transparent 60%)"></div>
+    <div style="position:absolute;left:clamp(28px,6vw,110px);bottom:clamp(60px,10vh,120px);color:#fff;max-width:680px">
+      <div class="rv" style="font:700 11px/1 'Zona Pro';letter-spacing:.4em;margin-bottom:20px">PHÂN KHU A2 · THE GRAND HO TRAM</div>
+      <div class="rv d1" style="font-family:'Ameyallinda',cursive;font-size:clamp(40px,5.5vw,78px);line-height:.82">Nơi rừng chạm biển</div>
+      <h2 class="rv d2" data-i18n="hero.title" style="margin:6px 0 0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(34px,5vw,76px);line-height:.98;letter-spacing:.01em">MỘT CHỐN AN TRÚ CHO GIA ĐÌNH</h2>
+      <a href="#gioithieu" data-i18n="hero.cta1" style="display:inline-block;margin-top:30px;text-decoration:none;background:#fff;color:#36573B;padding:15px 30px;border-radius:2px;font:700 12px/1 'Zona Pro';letter-spacing:.06em">Khám phá A2</a>
+    </div>
+    <div style="position:absolute;right:clamp(28px,5vw,80px);top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font:600 10px/1 'Zona Pro';letter-spacing:.3em;color:rgba(255,255,255,.7)">OCEAN FRONT · HO TRAM BEACH</div>
+  </div>
+
+  <!-- Hero switcher (demo control) -->
+  <div style="position:absolute;left:50%;bottom:84px;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.16);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.3);border-radius:40px;padding:6px 8px">
+    <span data-i18n="hero.opt" style="font:700 9px/1 'Zona Pro';letter-spacing:.18em;color:#fff;padding:0 8px">PHƯƠNG ÁN HERO</span>
+    <button data-action="hero" data-hero="A" style="border:none;cursor:pointer;width:30px;height:24px;border-radius:20px;background:#fff;color:#36573B;font:700 11px/1 'Zona Pro'">A</button>
+    <button data-action="hero" data-hero="B" style="border:none;cursor:pointer;width:30px;height:24px;border-radius:20px;background:transparent;color:#fff;font:700 11px/1 'Zona Pro'">B</button>
+    <button data-action="hero" data-hero="C" style="border:none;cursor:pointer;width:30px;height:24px;border-radius:20px;background:transparent;color:#fff;font:700 11px/1 'Zona Pro'">C</button>
+  </div>
+</section>
+
+<!-- ============ GIỚI THIỆU / OCEAN FRONT ============ -->
+<section id="gioithieu" style="padding:clamp(80px,11vw,160px) clamp(24px,7vw,120px);background:url(assets/bg/Yellow-03.png) center/cover no-repeat,#F6F3EC">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,90px);align-items:center">
+    <div>
+      <div class="rv" style="font:700 11px/1 'Zona Pro';letter-spacing:.34em;color:#B7995A;margin-bottom:20px">GIỚI THIỆU</div>
+      <h2 class="rv d1" style="margin:0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(26px,3.8vw,46px);line-height:1.04">
+        <span style="display:block;font-family:'Ameyallinda',cursive;color:#708573;font-weight:400;font-size:1em;line-height:.8">Vị thế</span><span style="display:block;margin-left:1.3em;margin-top:.05em">trực diện biển độc tôn<br>tại Hồ Tràm</span>
+      </h2>
+      <p class="rv d2" data-i18n="intro.p1" style="margin:26px 0 0;font:300 16px/1.85 'Zona Pro';color:#4a5b4d;max-width:520px">A2 không chỉ là một dự án, mà là tài sản hiếm với vị thế Ocean Front — tầm nhìn không bị che chắn và giá trị gia tăng theo thời gian, ngay tại thủ phủ nghỉ dưỡng cao cấp mới của miền Nam.</p>
+      <div class="rv d3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px">
+        <div><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:clamp(34px,4vw,50px);font-weight:600;color:#36573B;line-height:1">100%</div><div data-i18n="intro.s1" style="font:600 10.5px/1.5 'Zona Pro';letter-spacing:.12em;text-transform:uppercase;color:#708573;margin-top:6px">Căn view biển</div></div>
+        <div><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:clamp(34px,4vw,50px);font-weight:600;color:#36573B;line-height:1">90'</div><div data-i18n="intro.s2" style="font:600 10.5px/1.5 'Zona Pro';letter-spacing:.12em;text-transform:uppercase;color:#708573;margin-top:6px">Từ TP.HCM</div></div>
+        <div><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:clamp(34px,4vw,50px);font-weight:600;color:#36573B;line-height:1">2km</div><div data-i18n="intro.s3" style="font:600 10.5px/1.5 'Zona Pro';letter-spacing:.12em;text-transform:uppercase;color:#708573;margin-top:6px">Bờ biển riêng</div></div>
+      </div>
+      <a href="#vitri" data-i18n="intro.more" style="display:inline-flex;align-items:center;gap:10px;margin-top:40px;text-decoration:none;color:#36573B;font:700 12px/1 'Zona Pro';letter-spacing:.08em;border-bottom:1px solid #B7995A;padding-bottom:6px">TÌM HIỂU THÊM →</a>
+    </div>
+    <div class="rv d2" style="position:relative;aspect-ratio:4/5;border-radius:4px;overflow:hidden;box-shadow:0 40px 80px -40px rgba(35,59,42,.5)">
+      <img data-parallax="0.06" src="assets/img/aerial-7.jpg" alt="Tháp căn hộ A2 hướng biển" style="position:absolute;top:-8%;left:-8%;width:116%;height:116%;object-fit:cover">
+      <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div>
+      <div style="position:absolute;left:20px;bottom:20px;background:rgba(255,255,255,.92);padding:14px 18px;border-radius:3px;max-width:62%">
+        <div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:20px;font-weight:600;color:#36573B">A2 Tower</div>
+        <div data-i18n="intro.cap" style="font:300 12px/1.5 'Zona Pro';color:#5a6b5c;margin-top:2px">100% căn hộ hướng biển trực diện</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ VỊ TRÍ ============ -->
+<section id="vitri" style="position:relative;background:#eef1ea;color:#233B2A;overflow:hidden">
+  <div style="position:relative;width:100%">
+    <img src="assets/vi-tri.jpg" alt="Bản đồ vị trí kết nối đến Hồ Tràm" style="display:block;width:100%;height:auto">
+    <div style="position:absolute;left:0;top:0;bottom:0;width:min(48%,660px);display:flex;flex-direction:column;justify-content:center;padding:0 clamp(24px,5vw,96px)">
+      <div class="rv" style="font:700 11px/1 'Zona Pro';letter-spacing:.34em;color:#B7995A;margin-bottom:18px">VỊ TRÍ VÔ GIÁ</div>
+      <h2 class="rv d1" style="margin:0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(26px,3.2vw,50px);line-height:1.06;color:#233B2A"><span style="display:block">Mặt tiền biển</span><span style="display:block;text-align:right;font-family:'Ameyallinda',cursive;color:#708573;font-weight:400;font-size:1.05em;line-height:.85;margin-top:-.05em">Độc tôn</span></h2>
+      <p class="rv d2" data-i18n="loc.sub" style="max-width:430px;margin:20px 0 0;font:300 15px/1.75 'Zona Pro';color:#4a5b4d">Tọa lạc trên cung đường biển đẹp bậc nhất Bà Rịa – Vũng Tàu, kết nối hoàn chỉnh qua hệ thống hạ tầng giao thông mới.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:clamp(22px,3vw,38px);max-width:400px">
+        <div class="rv d1" style="border:1px solid rgba(35,59,42,.14);border-radius:3px;padding:15px 17px;background:rgba(255,255,255,.55)"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:27px;font-weight:600;color:#36573B">5'</div><div data-i18n="loc.1" style="font:500 11.5px/1.45 'Zona Pro';color:#5a6b5c;margin-top:4px">Đến sân golf The Bluffs</div></div>
+        <div class="rv d2" style="border:1px solid rgba(35,59,42,.14);border-radius:3px;padding:15px 17px;background:rgba(255,255,255,.55)"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:27px;font-weight:600;color:#36573B">10'</div><div data-i18n="loc.2" style="font:500 11.5px/1.45 'Zona Pro';color:#5a6b5c;margin-top:4px">Đến Hồ Tràm Strip</div></div>
+        <div class="rv d3" style="border:1px solid rgba(35,59,42,.14);border-radius:3px;padding:15px 17px;background:rgba(255,255,255,.55)"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:27px;font-weight:600;color:#36573B">90'</div><div data-i18n="loc.3" style="font:500 11.5px/1.45 'Zona Pro';color:#5a6b5c;margin-top:4px">Từ trung tâm TP.HCM</div></div>
+        <div class="rv d4" style="border:1px solid rgba(35,59,42,.14);border-radius:3px;padding:15px 17px;background:rgba(255,255,255,.55)"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:27px;font-weight:600;color:#36573B">120'</div><div data-i18n="loc.4" style="font:500 11.5px/1.45 'Zona Pro';color:#5a6b5c;margin-top:4px">Sân bay Long Thành</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIỆN ÍCH ============ -->
+<section id="tienich" style="padding:clamp(80px,11vw,160px) clamp(24px,7vw,120px);background:url(assets/bg/Yellow-04.png) center/cover no-repeat,#FBFAF6">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="max-width:640px;margin-bottom:56px">
+      <div class="rv" style="font:700 11px/1 'Zona Pro';letter-spacing:.34em;color:#B7995A;margin-bottom:18px">TIỆN ÍCH</div>
+      <h2 class="rv d1" style="margin:0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(30px,4.4vw,54px);line-height:1.04"><span style="display:block">All-in-One <span style="font-family:'Ameyallinda',cursive;color:#708573;font-weight:400;font-size:1.12em">Resort</span></span><span style="display:block;margin-top:.04em">từ cảm xúc đến trải nghiệm</span></h2>
+      <p class="rv d2" data-i18n="ame.sub" style="margin:22px 0 0;font:300 16px/1.8 'Zona Pro';color:#4a5b4d">Hệ tiện ích quy hoạch đồng bộ: thư giãn, giải trí và chăm sóc sức khỏe kết nối liền mạch giữa rừng và biển.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px">
+      <div class="rv d1" style="position:relative;aspect-ratio:3/4;border-radius:4px;overflow:hidden"><img src="assets/img/beach-club.jpg" alt="Beach Club" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background:linear-gradient(transparent 38%,rgba(20,38,26,.72))"></div><div style="position:absolute;left:18px;bottom:18px;color:#fff"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:22px;font-weight:600">Bãi biển riêng</div><div data-i18n="ame.1" style="font:300 12px/1.4 'Zona Pro';opacity:.82;margin-top:2px">2km bờ cát trắng</div></div></div>
+      <div class="rv d2" style="position:relative;aspect-ratio:3/4;border-radius:4px;overflow:hidden;margin-top:32px"><img src="assets/img/pool.jpg" alt="Bể bơi vô cực" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background:linear-gradient(transparent 38%,rgba(20,38,26,.72))"></div><div style="position:absolute;left:18px;bottom:18px;color:#fff"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:22px;font-weight:600">Bể bơi vô cực</div><div data-i18n="ame.2" style="font:300 12px/1.4 'Zona Pro';opacity:.82;margin-top:2px">Hướng hoàng hôn</div></div></div>
+      <div class="rv d3" style="position:relative;aspect-ratio:3/4;border-radius:4px;overflow:hidden"><img src="assets/img/lobby.jpg" alt="Spa & Wellness" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background:linear-gradient(transparent 38%,rgba(20,38,26,.72))"></div><div style="position:absolute;left:18px;bottom:18px;color:#fff"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:22px;font-weight:600">Spa &amp; Wellness</div><div data-i18n="ame.3" style="font:300 12px/1.4 'Zona Pro';opacity:.82;margin-top:2px">Chăm sóc sức khỏe</div></div></div>
+      <div class="rv d4" style="position:relative;aspect-ratio:3/4;border-radius:4px;overflow:hidden;margin-top:32px"><img src="assets/img/kid-club.jpg" alt="Khu vui chơi trẻ em" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background:linear-gradient(transparent 38%,rgba(20,38,26,.72))"></div><div style="position:absolute;left:18px;bottom:18px;color:#fff"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:22px;font-weight:600">Khu vui chơi trẻ em</div><div data-i18n="ame.4" style="font:300 12px/1.4 'Zona Pro';opacity:.82;margin-top:2px">Cho gia đình trẻ</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SẢN PHẨM ============ -->
+<section id="sanpham" style="padding:clamp(80px,11vw,160px) clamp(24px,7vw,120px);background:url(assets/bg/Yellow-02.png) center/cover no-repeat,#F6F3EC">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="text-align:center;max-width:620px;margin:0 auto 60px">
+      <div class="rv" style="font:700 11px/1 'Zona Pro';letter-spacing:.34em;color:#B7995A;margin-bottom:18px">SẢN PHẨM</div>
+      <h2 class="rv d1" style="margin:0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(30px,4.4vw,54px);line-height:1.04"><span style="display:block;font-family:'Ameyallinda',cursive;color:#708573;font-weight:400;font-size:1em;line-height:.8">Nơi an trú</span><span style="display:block;margin-top:.06em">tinh tế giữa thiên nhiên</span></h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      <a href="#matbang" class="prodcard rv d1" style="text-decoration:none;color:inherit;display:block">
+        <div class="prodimg" style="position:relative;aspect-ratio:4/3;border-radius:4px;overflow:hidden"><div style="position:absolute;inset:0;transition:transform 1s cubic-bezier(.16,.72,.27,1);background:url(assets/img/apt-2br-living.jpg) center/cover"></div><div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div><span style="position:absolute;left:18px;top:16px;font:500 10px/1 'Zona Pro';letter-spacing:.2em;color:rgba(255,255,255,.85);text-transform:uppercase">Căn hộ A2 Tower</span></div>
+        <div style="padding:22px 4px"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:28px;font-weight:600;color:#233B2A">Căn hộ biển</div><p data-i18n="prod.1" style="margin:6px 0 0;font:300 14px/1.7 'Zona Pro';color:#5a6b5c">Condotel tiện nghi, 100% view biển trực diện, đa công năng.</p></div>
+      </a>
+      <a href="#matbang" class="prodcard rv d2" style="text-decoration:none;color:inherit;display:block">
+        <div class="prodimg" style="position:relative;aspect-ratio:4/3;border-radius:4px;overflow:hidden"><div style="position:absolute;inset:0;transition:transform 1s cubic-bezier(.16,.72,.27,1);background:url(assets/img/aerial-1.jpg) center/cover"></div><div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div><span style="position:absolute;left:18px;top:16px;font:500 10px/1 'Zona Pro';letter-spacing:.2em;color:rgba(255,255,255,.85);text-transform:uppercase">Biệt thự biển</span></div>
+        <div style="padding:22px 4px"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:28px;font-weight:600;color:#233B2A">Biệt thự biển</div><p data-i18n="prod.2" style="margin:6px 0 0;font:300 14px/1.7 'Zona Pro';color:#5a6b5c">Biệt thự sân vườn hồ bơi riêng, không gian riêng tư đầy cảm xúc.</p></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MẶT BẰNG TIỆN ÍCH (interactive) ============ -->
+<section id="matbang" style="padding:clamp(80px,11vw,160px) clamp(24px,7vw,120px);background:#233B2A;color:#F6F3EC">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="text-align:center;max-width:640px;margin:0 auto 56px">
+      <div class="rv" style="font:700 11px/1 'Zona Pro';letter-spacing:.34em;color:#9CAD5F;margin-bottom:18px">MẶT BẰNG TIỆN ÍCH</div>
+      <h2 class="rv d1" style="margin:0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(30px,4.4vw,54px);line-height:1.04"><span style="display:block;font-family:'Ameyallinda',cursive;color:#9CAD5F;font-weight:400;font-size:1em;line-height:.8">Khám phá</span><span style="display:block;margin-top:.06em">cấu trúc &amp; mặt bằng</span></h2>
+      <p class="rv d2" data-i18n="fp.sub" style="margin:20px 0 0;font:300 15px/1.8 'Zona Pro';color:rgba(246,243,236,.72)">Chọn khu → chọn tầng → xem các căn → mở gallery. (Thay cho "VR360" — đúng bản chất mặt bằng căn hộ.)</p>
+    </div>
+    <div class="rv d2" style="display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start">
+      <!-- zones + floors -->
+      <div>
+        <div style="font:700 10px/1 'Zona Pro';letter-spacing:.2em;color:#9CAD5F;margin-bottom:12px">KHU VỰC</div>
+        <div id="zones" style="display:flex;flex-direction:column;gap:8px">
+          <div class="zone" data-action="floor-zone" data-zone="HT" style="border:1px solid #9CAD5F;background:rgba(156,173,95,.14);border-radius:3px;padding:16px 18px"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:20px;font-weight:600;color:#fff">A2 Tower</div><div style="font:300 12px/1.4 'Zona Pro';color:rgba(246,243,236,.6)">25 tầng · căn hộ biển</div></div>
+          <div class="zone" data-action="floor-zone" data-zone="VL" style="border:1px solid rgba(246,243,236,.18);border-radius:3px;padding:16px 18px"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:20px;font-weight:600;color:#fff">Biệt thự biển</div><div style="font-family:'Zona Pro';font:300 12px/1.4 'Zona Pro';color:rgba(246,243,236,.6)">3 dãy · villa sân vườn</div></div>
+          <div class="zone" data-action="floor-zone" data-zone="AM" style="border:1px solid rgba(246,243,236,.18);border-radius:3px;padding:16px 18px"><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:20px;font-weight:600;color:#fff">Khối tiện ích</div><div style="font:300 12px/1.4 'Zona Pro';color:rgba(246,243,236,.6)">Clubhouse · spa · hồ bơi</div></div>
+        </div>
+        <div style="font:700 10px/1 'Zona Pro';letter-spacing:.2em;color:#9CAD5F;margin:22px 0 12px">TẦNG</div>
+        <div id="floors" style="display:flex;flex-wrap:wrap;gap:7px"></div>
+      </div>
+      <!-- gallery -->
+      <div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px">
+          <div id="fpTitle" style="font-family:'Domaine Display','Georgia Pro',serif;font-size:24px;font-weight:600;color:#fff">A2 Tower — Tầng 12</div>
+          <div id="fpMeta" data-i18n="fp.units" style="font:600 11px/1 'Zona Pro';letter-spacing:.1em;color:#9CAD5F">8 CĂN / TẦNG</div>
+        </div>
+        <div id="fpGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px"></div>
+        <p data-i18n="fp.note" style="margin:18px 0 0;font:300 12px/1.6 'Zona Pro';color:rgba(246,243,236,.5)">* Bản demo — mỗi ô sẽ liên kết tới gallery hình thực tế của từng loại căn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THƯ VIỆN ============ -->
+<section id="thuvien" style="padding:clamp(80px,11vw,160px) clamp(24px,7vw,120px);background:url(assets/bg/Yellow-01.png) center/cover no-repeat,#FBFAF6">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:50px">
+      <div class="rv" style="font:700 11px/1 'Zona Pro';letter-spacing:.34em;color:#B7995A;margin-bottom:18px">THƯ VIỆN</div>
+      <h2 class="rv d1" style="margin:0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(30px,4.4vw,54px)"><span style="display:block;font-family:'Ameyallinda',cursive;color:#708573;font-weight:400;font-size:1em;line-height:.8">Trải nghiệm</span><span style="display:block;margin-top:.06em">tại A2</span></h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:130px;gap:12px">
+      <div class="rv d1" style="grid-column:span 3;grid-row:span 2;position:relative;border-radius:4px;overflow:hidden"><img src="assets/img/aerial-3.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div></div>
+      <div class="rv d2" style="grid-column:span 3;position:relative;border-radius:4px;overflow:hidden"><img src="assets/img/pool.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div></div>
+      <div class="rv d3" style="grid-column:span 3;position:relative;border-radius:4px;overflow:hidden"><img src="assets/img/beach-club.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div></div>
+      <div class="rv d1" style="grid-column:span 2;position:relative;border-radius:4px;overflow:hidden"><img src="assets/img/apt-bedroom.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div></div>
+      <div class="rv d2" style="grid-column:span 2;position:relative;border-radius:4px;overflow:hidden"><img src="assets/img/kid-club.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div></div>
+      <div class="rv d3" style="grid-column:span 2;position:relative;border-radius:4px;overflow:hidden"><img src="assets/img/balcony-view.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TÀI LIỆU MARKETING ============ -->
+<section id="tailieu" style="padding:clamp(80px,11vw,160px) clamp(24px,7vw,120px);background:#36573B;color:#F6F3EC">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center">
+      <div>
+        <div class="rv" style="font:700 11px/1 'Zona Pro';letter-spacing:.34em;color:#9CAD5F;margin-bottom:18px">TÀI LIỆU MARKETING</div>
+        <h2 class="rv d1" style="margin:0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(28px,4vw,48px);line-height:1.06"><span style="display:block;font-family:'Ameyallinda',cursive;color:#9CAD5F;font-weight:400;font-size:1em;line-height:.8">Bộ tài liệu</span><span style="display:block;margin-left:1.3em;margin-top:.05em">cho dự án A2</span></h2>
+        <p class="rv d2" data-i18n="doc.sub" style="margin:20px 0 0;font:300 15px/1.8 'Zona Pro';color:rgba(246,243,236,.72)">Tải nhanh brochure, catalogue, leaflet và bộ ảnh đăng mạng xã hội để sử dụng cho công tác bán hàng.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <button data-action="doc" class="docrow rv d1" style="cursor:pointer;text-align:left;display:flex;align-items:center;gap:18px;background:rgba(246,243,236,.06);border:1px solid rgba(246,243,236,.14);border-radius:3px;padding:18px 22px;color:inherit;font-family:'Zona Pro'"><span style="width:42px;height:42px;border-radius:50%;background:#9CAD5F;color:#233B2A;display:flex;align-items:center;justify-content:center;font:700 13px/1 'Zona Pro';flex:none">PDF</span><span style="flex:1"><span style="display:block;font-family:'Domaine Display','Georgia Pro',serif;font-size:20px;font-weight:600;color:#fff">Brochure dự án</span><span data-i18n="doc.1" style="font:300 12px/1.4 'Zona Pro';color:rgba(246,243,236,.6)">Tổng quan A2 · 24 trang</span></span><span class="docgo" style="transition:transform .3s;color:#9CAD5F;font-size:20px">↓</span></button>
+        <button data-action="doc" class="docrow rv d2" style="cursor:pointer;text-align:left;display:flex;align-items:center;gap:18px;background:rgba(246,243,236,.06);border:1px solid rgba(246,243,236,.14);border-radius:3px;padding:18px 22px;color:inherit;font-family:'Zona Pro'"><span style="width:42px;height:42px;border-radius:50%;background:#B7995A;color:#fff;display:flex;align-items:center;justify-content:center;font:700 11px/1 'Zona Pro';flex:none">CAT</span><span style="flex:1"><span style="display:block;font-family:'Domaine Display','Georgia Pro',serif;font-size:20px;font-weight:600;color:#fff">Catalogue sản phẩm</span><span data-i18n="doc.2" style="font:300 12px/1.4 'Zona Pro';color:rgba(246,243,236,.6)">Bảng giá &amp; mặt bằng căn</span></span><span class="docgo" style="transition:transform .3s;color:#9CAD5F;font-size:20px">↓</span></button>
+        <button data-action="doc" class="docrow rv d3" style="cursor:pointer;text-align:left;display:flex;align-items:center;gap:18px;background:rgba(246,243,236,.06);border:1px solid rgba(246,243,236,.14);border-radius:3px;padding:18px 22px;color:inherit;font-family:'Zona Pro'"><span style="width:42px;height:42px;border-radius:50%;background:#708573;color:#fff;display:flex;align-items:center;justify-content:center;font:700 11px/1 'Zona Pro';flex:none">LFT</span><span style="flex:1"><span style="display:block;font-family:'Domaine Display','Georgia Pro',serif;font-size:20px;font-weight:600;color:#fff">Leaflet &amp; Social post</span><span data-i18n="doc.3" style="font:300 12px/1.4 'Zona Pro';color:rgba(246,243,236,.6)">Bộ ảnh đăng mạng xã hội</span></span><span class="docgo" style="transition:transform .3s;color:#9CAD5F;font-size:20px">↓</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIN TỨC ============ -->
+<section id="tintuc" style="padding:clamp(80px,11vw,160px) clamp(24px,7vw,120px);background:url(assets/bg/Yellow-03.png) center/cover no-repeat,#F6F3EC">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-bottom:50px">
+      <div>
+        <div class="rv" style="font:700 11px/1 'Zona Pro';letter-spacing:.34em;color:#B7995A;margin-bottom:18px">TRUYỀN THÔNG</div>
+        <h2 class="rv d1" style="margin:0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(30px,4.4vw,54px)">Tin tức &amp; Sự kiện</h2>
+      </div>
+      <a href="#tintuc" data-i18n="news.all" style="text-decoration:none;color:#36573B;font:700 12px/1 'Zona Pro';letter-spacing:.08em;border-bottom:1px solid #B7995A;padding-bottom:6px">XEM TẤT CẢ →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <a href="#tintuc" class="newscard rv d1" style="text-decoration:none;color:inherit"><div class="newsimg" style="position:relative;aspect-ratio:3/2;border-radius:4px;overflow:hidden"><div style="position:absolute;inset:0;transition:transform 1s cubic-bezier(.16,.72,.27,1);background:url(assets/img/aerial-2.jpg) center/cover"></div><div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div></div><div style="padding:18px 2px"><div style="font:600 10px/1 'Zona Pro';letter-spacing:.1em;color:#B7995A">25/07/2026 · TIN TỨC</div><div data-i18n="news.1" style="font-family:'Domaine Display','Georgia Pro',serif;font-size:21px;font-weight:600;line-height:1.25;margin-top:10px;color:#233B2A">A2 sắp ra mắt tại thủ phủ du lịch phía Nam</div></div></a>
+      <a href="#tintuc" class="newscard rv d2" style="text-decoration:none;color:inherit"><div class="newsimg" style="position:relative;aspect-ratio:3/2;border-radius:4px;overflow:hidden"><div style="position:absolute;inset:0;transition:transform 1s cubic-bezier(.16,.72,.27,1);background:url(assets/img/aerial-1.jpg) center/cover"></div><div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div></div><div style="padding:18px 2px"><div style="font:600 10px/1 'Zona Pro';letter-spacing:.1em;color:#B7995A">27/07/2026 · TIN TỨC</div><div data-i18n="news.2" style="font-family:'Domaine Display','Georgia Pro',serif;font-size:21px;font-weight:600;line-height:1.25;margin-top:10px;color:#233B2A">The Grand Ho Tram nâng chuẩn nghỉ dưỡng cao cấp</div></div></a>
+      <a href="#tintuc" class="newscard rv d3" style="text-decoration:none;color:inherit"><div class="newsimg" style="position:relative;aspect-ratio:3/2;border-radius:4px;overflow:hidden"><div style="position:absolute;inset:0;transition:transform 1s cubic-bezier(.16,.72,.27,1);background:url(assets/img/aerial-7.jpg) center/cover"></div><div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div></div><div style="padding:18px 2px"><div style="font:600 10px/1 'Zona Pro';letter-spacing:.1em;color:#B7995A">25/07/2026 · TIN TỨC</div><div data-i18n="news.3" style="font-family:'Domaine Display','Georgia Pro',serif;font-size:21px;font-weight:600;line-height:1.25;margin-top:10px;color:#233B2A">Kiến trúc lấy cảm hứng từ thiên nhiên tại A2</div></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ĐĂNG KÝ TƯ VẤN ============ -->
+<section id="lienhe" style="position:relative;padding:clamp(80px,11vw,160px) clamp(24px,7vw,120px);background:linear-gradient(120deg,#2c4733,#4f7a5e 60%,#86b0c4);color:#fff;overflow:hidden">
+  <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.04) 0 2px,transparent 2px 18px)"></div>
+  <div style="position:relative;max-width:760px;margin:0 auto;text-align:center">
+    <div class="rv" style="font:700 11px/1 'Zona Pro';letter-spacing:.34em;color:rgba(255,255,255,.85);margin-bottom:18px">ĐĂNG KÝ TƯ VẤN</div>
+    <h2 class="rv d1" style="margin:0 0 14px;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(30px,4.6vw,56px);line-height:1.04">Khởi đầu hành trình tại A2</h2>
+    <p class="rv d2" data-i18n="form.sub" style="margin:0 auto 38px;max-width:520px;font:300 15.5px/1.7 'Zona Pro';color:rgba(255,255,255,.82)">Để lại thông tin để nhận bảng giá, chính sách và tài liệu dự án mới nhất.</p>
+    <form data-action="form" class="rv d3" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left">
+      <input data-i18n-ph="form.name" placeholder="Họ và tên" style="padding:15px 18px;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.1);border-radius:2px;color:#fff;font:400 14px/1 'Zona Pro'">
+      <input data-i18n-ph="form.phone" placeholder="Số điện thoại" style="padding:15px 18px;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.1);border-radius:2px;color:#fff;font:400 14px/1 'Zona Pro'">
+      <input data-i18n-ph="form.email" placeholder="Email" style="grid-column:span 2;padding:15px 18px;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.1);border-radius:2px;color:#fff;font:400 14px/1 'Zona Pro'">
+      <textarea data-i18n-ph="form.msg" placeholder="Nội dung quan tâm" rows="3" style="grid-column:span 2;padding:15px 18px;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.1);border-radius:2px;color:#fff;font:400 14px/1.5 'Zona Pro';resize:vertical"></textarea>
+      <button type="submit" data-i18n="form.send" style="grid-column:span 2;cursor:pointer;background:#B7995A;color:#fff;border:none;padding:16px;border-radius:2px;font:700 13px/1 'Zona Pro';letter-spacing:.1em">GỬI NGAY</button>
+    </form>
+    <div id="formOk" data-i18n="form.ok" style="display:none;margin-top:18px;font:600 14px/1 'Zona Pro';color:#fff">✓ Cảm ơn bạn! Chúng tôi sẽ liên hệ sớm nhất.</div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer style="background:#1c2f22;color:rgba(246,243,236,.72);padding:clamp(56px,7vw,90px) clamp(24px,7vw,120px) 36px">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px">
+    <div>
+      <div style="font-family:'Georgia Pro',Georgia,serif;font-size:34px;font-weight:700;color:#fff;letter-spacing:.04em">A2</div>
+      <div style="font:600 9px/1 'Zona Pro';letter-spacing:.3em;color:#9CAD5F;margin-top:6px">THE GRAND HO TRAM</div>
+      <p data-i18n="ft.tag" style="margin:20px 0 0;font:300 13px/1.7 'Zona Pro';max-width:280px">Phân khu nghỉ dưỡng biển A2 — nơi rừng chạm biển, dành cho gia đình.</p>
+    </div>
+    <div>
+      <div style="font:700 10px/1 'Zona Pro';letter-spacing:.2em;color:#fff;margin-bottom:16px">KHÁM PHÁ</div>
+      <div style="display:flex;flex-direction:column;gap:10px;font:300 13px/1 'Zona Pro'">
+        <a href="#gioithieu" data-i18n="nav.about" style="color:inherit;text-decoration:none">Giới thiệu</a>
+        <a href="#vitri" data-i18n="nav.location" style="color:inherit;text-decoration:none">Vị trí</a>
+        <a href="#tienich" data-i18n="nav.amenities" style="color:inherit;text-decoration:none">Tiện ích</a>
+        <a href="#sanpham" data-i18n="nav.products" style="color:inherit;text-decoration:none">Sản phẩm</a>
+      </div>
+    </div>
+    <div>
+      <div style="font:700 10px/1 'Zona Pro';letter-spacing:.2em;color:#fff;margin-bottom:16px">TIỆN ÍCH</div>
+      <div style="display:flex;flex-direction:column;gap:10px;font:300 13px/1 'Zona Pro'">
+        <a href="#matbang" data-i18n="nav.floorplan" style="color:inherit;text-decoration:none">Mặt bằng tiện ích</a>
+        <a href="#tailieu" data-i18n="nav.docs" style="color:inherit;text-decoration:none">Tài liệu marketing</a>
+        <a href="#tintuc" data-i18n="nav.news" style="color:inherit;text-decoration:none">Tin tức</a>
+        <a href="#lienhe" data-i18n="nav.contact" style="color:inherit;text-decoration:none">Liên hệ</a>
+      </div>
+    </div>
+    <div>
+      <div style="font:700 10px/1 'Zona Pro';letter-spacing:.2em;color:#fff;margin-bottom:16px">LIÊN HỆ</div>
+      <div style="display:flex;flex-direction:column;gap:10px;font:300 13px/1.5 'Zona Pro'">
+        <span>Xã Hồ Tràm, TP. Hồ Chí Minh</span>
+        <a href="tel:0911804988" style="color:inherit;text-decoration:none">091 180 49 88</a>
+        <a href="#lienhe" style="color:inherit;text-decoration:none">info@a2hotram.vn</a>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1280px;margin:40px auto 0;padding-top:24px;border-top:1px solid rgba(246,243,236,.12);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font:300 11px/1.5 'Zona Pro';color:rgba(246,243,236,.5)">
+    <span data-i18n="ft.demo">Bản demo đề xuất — © 2026 A2 Project. Hình ảnh placeholder.</span>
+    <span>Prepared for The Grand Ho Tram</span>
+  </div>
+</footer>
+
+<!-- ============ GHI CHÚ THIẾT KẾ / DESIGN NOTES ============ -->
+<section id="designnotes" style="background:#F6F3EC;color:#233B2A">
+
+  <!-- separator banner (tách hẳn khỏi footer trang chủ) -->
+  <div style="background:#FBFAF6;color:#233B2A;text-align:center;padding:clamp(72px,9vw,124px) 24px;border-top:7px solid #9CAD5F">
+    <div style="font:700 11px/1 'Zona Pro';letter-spacing:.4em;color:#B7995A;margin-bottom:22px">— KẾT THÚC DEMO TRANG CHỦ —</div>
+    <div style="font-family:'Ameyallinda',cursive;font-size:clamp(36px,5vw,64px);color:#708573;line-height:.9">Ghi chú thiết kế</div>
+    <h2 style="margin:8px 0 0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(24px,3.4vw,42px)">Guideline cho dự án</h2>
+    <p style="max-width:600px;margin:20px auto 0;font:300 15px/1.7 'Zona Pro';color:#5a6b5c">Định hướng phong cách, bảng màu, bộ font và cách trình bày nội dung — để toàn bộ website A2 luôn nhất quán và dễ triển khai.</p>
+  </div>
+
+  <div style="max-width:1180px;margin:0 auto;padding:clamp(64px,8vw,110px) clamp(24px,7vw,120px);display:flex;flex-direction:column;gap:clamp(64px,9vw,110px)">
+
+    <!-- 01 · Content block template -->
+    <div>
+      <div style="font:700 10px/1 'Zona Pro';letter-spacing:.3em;color:#B7995A;margin-bottom:26px">01 · CẤU TRÚC MỘT KHỐI NỘI DUNG</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px);align-items:center">
+        <div style="position:relative;aspect-ratio:4/3;border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(35,59,42,.4)">
+          <img src="assets/img/aerial-3.jpg" alt="Hình demo khối nội dung" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+          <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div>
+          <span style="position:absolute;left:14px;top:13px;background:rgba(28,47,34,.72);color:#fff;font:700 9px/1 'Zona Pro';letter-spacing:.18em;padding:8px 12px;border-radius:20px">① HÌNH ẢNH</span>
+        </div>
+        <div>
+          <div style="font:700 10px/1 'Zona Pro';letter-spacing:.26em;color:#708573;margin-bottom:16px">② TIÊU ĐỀ · SCRIPT + SERIF</div>
+          <h3 style="margin:0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(26px,3.4vw,42px);line-height:1.02">
+            <span style="display:block;font-family:'Ameyallinda',cursive;color:#708573;font-weight:400;font-size:1em;line-height:.8">Tiêu đề mục</span>
+            <span style="display:block;margin-top:.05em">đặt theo guideline</span>
+          </h3>
+          <p style="margin:18px 0 0;font:300 15px/1.8 'Zona Pro';color:#4a5b4d;max-width:460px">③ Mỗi khối nội dung gồm: <b style="font-weight:600;color:#36573B">hình ảnh bên trái</b>, nội dung bên phải — tiêu đề ở trên, đoạn giới thiệu ngắn ở giữa, nút "Xem thêm" ở dưới. Bố cục lặp lại nhất quán toàn site; có thể đảo hình sang phải để tạo nhịp điệu.</p>
+          <a href="#designnotes" style="display:inline-block;margin-top:26px;text-decoration:none;background:#36573B;color:#fff;padding:14px 26px;border-radius:2px;font:700 11px/1 'Zona Pro';letter-spacing:.08em">④ XEM THÊM →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 · Phong cách thiết kế (image right) -->
+    <div>
+      <div style="font:700 10px/1 'Zona Pro';letter-spacing:.3em;color:#B7995A;margin-bottom:26px">02 · PHONG CÁCH THIẾT KẾ</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px);align-items:center">
+        <div style="order:2;position:relative;aspect-ratio:4/3;border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(35,59,42,.4)">
+          <img src="assets/img/pool.jpg" alt="Phong cách resort tối giản" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+          <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div>
+          <span style="position:absolute;left:14px;top:13px;background:rgba(28,47,34,.72);color:#fff;font:700 9px/1 'Zona Pro';letter-spacing:.18em;padding:8px 12px;border-radius:20px">HÌNH DEMO</span>
+        </div>
+        <div style="order:1">
+          <h3 style="margin:0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(26px,3.4vw,42px);line-height:1.02">
+            <span style="display:block;font-family:'Ameyallinda',cursive;color:#708573;font-weight:400;font-size:1em;line-height:.8">Tối giản</span>
+            <span style="display:block;margin-top:.05em">sang trọng<br>&amp; nhiều khoảng thở</span>
+          </h3>
+          <p style="margin:18px 0 0;font:300 15px/1.8 'Zona Pro';color:#4a5b4d;max-width:460px">Ngôn ngữ nghỉ dưỡng cao cấp: bố cục rộng rãi, nhiều khoảng trắng, ít chi tiết thừa. Hình ảnh lớn dẫn dắt cảm xúc; chữ và nút giữ tinh tế, không phô trương — gợi sự thư thái của một khu resort biển.</p>
+          <a href="#designnotes" style="display:inline-block;margin-top:26px;text-decoration:none;background:#36573B;color:#fff;padding:14px 26px;border-radius:2px;font:700 11px/1 'Zona Pro';letter-spacing:.08em">XEM THÊM →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 · Ngôn ngữ hình ảnh (image left) -->
+    <div>
+      <div style="font:700 10px/1 'Zona Pro';letter-spacing:.3em;color:#B7995A;margin-bottom:26px">03 · NGÔN NGỮ HÌNH ẢNH</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px);align-items:center">
+        <div style="position:relative;aspect-ratio:4/3;border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(35,59,42,.4)">
+          <img src="assets/img/family-bbq.png" alt="Gia đình quây quần giữa thiên nhiên" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+          <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(48deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)"></div>
+          <span style="position:absolute;left:14px;top:13px;background:rgba(28,47,34,.72);color:#fff;font:700 9px/1 'Zona Pro';letter-spacing:.18em;padding:8px 12px;border-radius:20px">HÌNH DEMO</span>
+        </div>
+        <div>
+          <h3 style="margin:0;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(26px,3.4vw,42px);line-height:1.02">
+            <span style="display:block;font-family:'Ameyallinda',cursive;color:#708573;font-weight:400;font-size:1em;line-height:.8">Gia đình</span>
+            <span style="display:block;margin-top:.05em">giữa rừng &amp; biển</span>
+          </h3>
+          <p style="margin:18px 0 0;font:300 15px/1.8 'Zona Pro';color:#4a5b4d;max-width:460px">Ưu tiên hình ảnh có con người &amp; gia đình tận hưởng không gian, xen kẽ thiên nhiên rừng – biển Hồ Tràm. Tone màu ấm, ánh nắng vàng "golden hour", sắc xanh của cây và biển. Tránh ảnh quá lạnh, quá no màu hoặc thiếu sức sống.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:22px">
+            <span style="font:600 11px/1 'Zona Pro';color:#36573B;background:rgba(112,133,115,.14);padding:9px 14px;border-radius:20px">Gia đình</span>
+            <span style="font:600 11px/1 'Zona Pro';color:#36573B;background:rgba(112,133,115,.14);padding:9px 14px;border-radius:20px">Rừng</span>
+            <span style="font:600 11px/1 'Zona Pro';color:#36573B;background:rgba(112,133,115,.14);padding:9px 14px;border-radius:20px">Biển</span>
+            <span style="font:600 11px/1 'Zona Pro';color:#36573B;background:rgba(112,133,115,.14);padding:9px 14px;border-radius:20px">Tone ấm · Golden hour</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 · Bảng màu -->
+    <div>
+      <div style="font:700 10px/1 'Zona Pro';letter-spacing:.3em;color:#B7995A;margin-bottom:10px">04 · BẢNG MÀU THƯƠNG HIỆU</div>
+      <h3 style="margin:0 0 28px;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(24px,3.2vw,38px)">Pantone &amp; mã màu sử dụng</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px">
+        <div><div style="height:96px;border-radius:4px;background:#233B2A;border:1px solid rgba(35,59,42,.1)"></div><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:16px;font-weight:600;margin-top:12px">Rừng sâu</div><div style="font:600 12px/1.5 'Zona Pro';color:#708573">#233B2A · Pantone 5535 C</div></div>
+        <div><div style="height:96px;border-radius:4px;background:#36573B"></div><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:16px;font-weight:600;margin-top:12px">Xanh nghỉ dưỡng</div><div style="font:600 12px/1.5 'Zona Pro';color:#708573">#36573B · Pantone 5467 C</div></div>
+        <div><div style="height:96px;border-radius:4px;background:#708573"></div><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:16px;font-weight:600;margin-top:12px">Sage</div><div style="font:600 12px/1.5 'Zona Pro';color:#708573">#708573 · Pantone 5615 C</div></div>
+        <div><div style="height:96px;border-radius:4px;background:#9CAD5F"></div><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:16px;font-weight:600;margin-top:12px">Lá olive</div><div style="font:600 12px/1.5 'Zona Pro';color:#708573">#9CAD5F · Pantone 7494 C</div></div>
+        <div><div style="height:96px;border-radius:4px;background:#B7995A"></div><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:16px;font-weight:600;margin-top:12px">Vàng cát</div><div style="font:600 12px/1.5 'Zona Pro';color:#708573">#B7995A · Pantone 4515 C</div></div>
+        <div><div style="height:96px;border-radius:4px;background:#F6F3EC;border:1px solid rgba(35,59,42,.12)"></div><div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:16px;font-weight:600;margin-top:12px">Kem nền</div><div style="font:600 12px/1.5 'Zona Pro';color:#708573">#F6F3EC · Pantone 9224 C</div></div>
+      </div>
+      <p style="margin:18px 0 0;font:300 13px/1.6 'Zona Pro';color:#7a857c">* Mã Pantone mang tính tham khảo để in ấn — màn hình hiển thị theo mã HEX.</p>
+    </div>
+
+    <!-- 05 · Typography -->
+    <div>
+      <div style="font:700 10px/1 'Zona Pro';letter-spacing:.3em;color:#B7995A;margin-bottom:10px">05 · HỆ THỐNG FONT CHỮ</div>
+      <h3 style="margin:0 0 28px;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(24px,3.2vw,38px)">Bộ font sử dụng</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+        <div style="background:#FBFAF6;border:1px solid rgba(35,59,42,.1);border-radius:4px;padding:30px 28px">
+          <div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:52px;font-weight:600;line-height:1;color:#233B2A">Aa</div>
+          <div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:24px;font-weight:600;margin-top:10px">Domaine Display</div>
+          <div style="font:700 10px/1 'Zona Pro';letter-spacing:.16em;color:#B7995A;margin-top:10px">TIÊU ĐỀ · HEADING</div>
+          <p style="margin:12px 0 0;font:300 13px/1.7 'Zona Pro';color:#5a6b5c">Serif hiện đại, thanh lịch — dùng cho mọi tiêu đề lớn.</p>
+        </div>
+        <div style="background:#FBFAF6;border:1px solid rgba(35,59,42,.1);border-radius:4px;padding:30px 28px">
+          <div style="font-family:'Zona Pro';font-size:52px;font-weight:700;line-height:1;color:#233B2A">Aa</div>
+          <div style="font-family:'Zona Pro';font-size:24px;font-weight:600;margin-top:10px">Zona Pro</div>
+          <div style="font:700 10px/1 'Zona Pro';letter-spacing:.16em;color:#B7995A;margin-top:10px">NỘI DUNG · BODY</div>
+          <p style="margin:12px 0 0;font:300 13px/1.7 'Zona Pro';color:#5a6b5c">Sans-serif sạch, dễ đọc — dùng cho đoạn văn, nhãn, nút.</p>
+        </div>
+        <div style="background:#FBFAF6;border:1px solid rgba(35,59,42,.1);border-radius:4px;padding:30px 28px">
+          <div style="font-family:'Ameyallinda',cursive;font-size:52px;line-height:1;color:#708573">Aa</div>
+          <div style="font-family:'Ameyallinda',cursive;font-size:30px;margin-top:10px;color:#233B2A">Ameyallinda</div>
+          <div style="font:700 10px/1 'Zona Pro';letter-spacing:.16em;color:#B7995A;margin-top:10px">ĐIỂM NHẤN · SCRIPT</div>
+          <p style="margin:12px 0 0;font:300 13px/1.7 'Zona Pro';color:#5a6b5c">Chữ viết tay — chỉ dùng làm điểm nhấn cảm xúc cho tiêu đề.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 · Title usage example -->
+    <div>
+      <div style="font:700 10px/1 'Zona Pro';letter-spacing:.3em;color:#B7995A;margin-bottom:10px">06 · CÁCH ĐẶT FONT TIÊU ĐỀ</div>
+      <h3 style="margin:0 0 12px;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(24px,3.2vw,38px)">Font script đi cùng font cứng</h3>
+      <p style="margin:0 0 32px;font:300 15px/1.8 'Zona Pro';color:#4a5b4d;max-width:620px">Mỗi tiêu đề ghép 2 lớp: một dòng <b style="font-weight:600;color:#708573">script (Ameyallinda)</b> làm điểm nhấn cảm xúc, đặt phía trên; và dòng <b style="font-weight:600;color:#36573B">serif (Domaine Display)</b> mang nội dung chính, đặt phía dưới — thụt vào nhẹ để tạo nhịp.</p>
+      <div style="background:#FBFAF6;border:1px solid rgba(35,59,42,.1);border-radius:4px;padding:clamp(36px,5vw,60px);display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center">
+        <div>
+          <span style="display:block;font-family:'Ameyallinda',cursive;color:#708573;font-size:clamp(30px,4vw,52px);line-height:.8">Vị thế</span>
+          <span style="display:block;margin-left:1.3em;margin-top:.05em;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(26px,3.6vw,46px);line-height:1.02;color:#233B2A">trực diện biển độc tôn</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px;min-width:200px">
+          <div style="display:flex;align-items:center;gap:10px"><span style="width:14px;height:14px;border-radius:50%;background:#708573;flex:none"></span><span style="font:600 12px/1.4 'Zona Pro';color:#4a5b4d">Lớp 1 — Script <b style="font-weight:600;color:#233B2A">Ameyallinda</b>, màu sage</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><span style="width:14px;height:14px;border-radius:50%;background:#233B2A;flex:none"></span><span style="font:600 12px/1.4 'Zona Pro';color:#4a5b4d">Lớp 2 — Serif <b style="font-weight:600;color:#233B2A">Domaine Display</b>, màu rừng</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 · Một số chức năng khác -->
+    <div>
+      <div style="font:700 10px/1 'Zona Pro';letter-spacing:.3em;color:#B7995A;margin-bottom:10px">07 · MỘT SỐ CHỨC NĂNG KHÁC CỦA WEBSITE</div>
+      <h3 style="margin:0 0 8px;font-family:'Domaine Display','Georgia Pro',serif;font-weight:600;font-size:clamp(24px,3.2vw,38px)">Tính năng tương tác &amp; kỹ thuật</h3>
+      <p style="margin:0 0 36px;font:300 15px/1.8 'Zona Pro';color:#4a5b4d;max-width:640px">Ngoài bố cục nội dung, website A2 còn tích hợp các chức năng tương tác giúp khách hàng khám phá dự án trực quan hơn.</p>
+
+      <!-- Mặt bằng vị trí tương tác -->
+      <div style="background:#FBFAF6;border:1px solid rgba(35,59,42,.1);border-radius:4px;padding:clamp(28px,4vw,44px);margin-bottom:18px">
+        <div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:clamp(20px,2.4vw,26px);font-weight:600;color:#233B2A">Mặt bằng vị trí tương tác</div>
+        <p style="margin:10px 0 26px;font:300 14px/1.7 'Zona Pro';color:#5a6b5c;max-width:700px">Bấm vào từng <b style="font-weight:600;color:#36573B">khu vực</b> để mở gallery hình ảnh khu đó → chọn <b style="font-weight:600;color:#36573B">tầng</b> để xem bản vẽ mặt bằng các căn → bấm vào <b style="font-weight:600;color:#36573B">mỗi căn</b> để xem hình ảnh chi tiết.</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+          <div>
+            <div style="position:relative;aspect-ratio:16/10;border-radius:4px;overflow:hidden;border:1px solid rgba(35,59,42,.1)"><img src="assets/img/loc-map.png" alt="Bước 1 — chọn khu vực" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
+            <div style="font:700 11px/1.4 'Zona Pro';color:#36573B;margin-top:10px">① Chọn khu vực → gallery</div>
+          </div>
+          <div>
+            <div style="position:relative;aspect-ratio:16/10;border-radius:4px;overflow:hidden;border:1px solid rgba(35,59,42,.1)"><img src="assets/img/tower-floors.png" alt="Bước 2 — chọn tầng" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
+            <div style="font:700 11px/1.4 'Zona Pro';color:#36573B;margin-top:10px">② Chọn tầng → mặt bằng các căn</div>
+          </div>
+          <div>
+            <div style="position:relative;aspect-ratio:16/10;border-radius:4px;overflow:hidden;border:1px solid rgba(35,59,42,.1)"><img src="assets/img/floorplan-modal.png" alt="Bước 3 — chọn căn" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
+            <div style="font:700 11px/1.4 'Zona Pro';color:#36573B;margin-top:10px">③ Chọn căn → hình ảnh căn</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 chức năng còn lại -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px">
+        <div style="background:#FBFAF6;border:1px solid rgba(35,59,42,.1);border-radius:4px;padding:30px 28px">
+          <div style="width:44px;height:44px;border-radius:50%;background:#36573B;color:#fff;display:flex;align-items:center;justify-content:center;font:700 11px/1 'Zona Pro';letter-spacing:.04em;margin-bottom:18px">PDF</div>
+          <div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:21px;font-weight:600;color:#233B2A">Tài liệu Marketing</div>
+          <p style="margin:10px 0 0;font:300 14px/1.75 'Zona Pro';color:#5a6b5c">Chủ đầu tư upload brochure, leaflet, social post… lên hệ thống để đại lý sale và khách hàng tải về sử dụng.</p>
+        </div>
+        <div style="background:#FBFAF6;border:1px solid rgba(35,59,42,.1);border-radius:4px;padding:30px 28px">
+          <div style="width:44px;height:44px;border-radius:50%;background:#B7995A;color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:18px"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+          <div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:21px;font-weight:600;color:#233B2A">Video nền dưới banner</div>
+          <p style="margin:10px 0 0;font:300 14px/1.75 'Zona Pro';color:#5a6b5c">Có thể dùng video chạy nền dưới banner để tạo ấn tượng mạnh. Tuy nhiên video làm website nặng &amp; chậm — khuyến nghị dùng ảnh thay đổi liên tục như bản demo để tối ưu tốc độ.</p>
+        </div>
+        <div style="background:#FBFAF6;border:1px solid rgba(35,59,42,.1);border-radius:4px;padding:30px 28px">
+          <div style="width:44px;height:44px;border-radius:50%;background:#708573;color:#fff;display:flex;align-items:center;justify-content:center;font:800 14px/1 'Zona Pro';margin-bottom:18px">&lt;/&gt;</div>
+          <div style="font-family:'Domaine Display','Georgia Pro',serif;font-size:21px;font-weight:600;color:#233B2A">Công nghệ &amp; tối ưu</div>
+          <p style="margin:10px 0 0;font:300 14px/1.75 'Zona Pro';color:#5a6b5c">Website được code theo công nghệ frontend &amp; backend mới nhất — đảm bảo tối ưu, tốc độ truy cập nhanh và responsive mượt trên mobile.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ FLOATING CONTACT WIDGET ============ -->
+<div style="position:fixed;right:18px;bottom:24px;z-index:70;display:flex;flex-direction:column;align-items:flex-end;gap:12px">
+  <div id="contactItems" style="display:none;flex-direction:column;gap:10px;align-items:flex-end">
+    <a href="tel:0911804988" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+      <span style="background:#fff;color:#36573B;font:700 11px/1 'Zona Pro';padding:9px 13px;border-radius:20px;box-shadow:0 6px 18px rgba(0,0,0,.18)">Hotline</span>
+      <span style="width:46px;height:46px;border-radius:50%;background:#36573B;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(0,0,0,.25)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+    </a>
+    <a href="#lienhe" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+      <span style="background:#fff;color:#36573B;font:700 11px/1 'Zona Pro';padding:9px 13px;border-radius:20px;box-shadow:0 6px 18px rgba(0,0,0,.18)">Chat</span>
+      <span style="width:46px;height:46px;border-radius:50%;background:#708573;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(0,0,0,.25)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+    </a>
+    <a href="https://chat.zalo.me/" target="_blank" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+      <span style="background:#fff;color:#36573B;font:700 11px/1 'Zona Pro';padding:9px 13px;border-radius:20px;box-shadow:0 6px 18px rgba(0,0,0,.18)">Zalo</span>
+      <span style="width:46px;height:46px;border-radius:50%;background:#B7995A;color:#fff;display:flex;align-items:center;justify-content:center;font:800 13px/1 'Zona Pro';box-shadow:0 8px 20px rgba(0,0,0,.25)">Za</span>
+    </a>
+  </div>
+  <button data-action="contact-toggle" id="contactFab" style="cursor:pointer;width:56px;height:56px;border-radius:50%;border:none;background:#36573B;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(28,47,34,.4)">
+    <svg id="fabIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  </button>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;vi&quot;,&quot;options&quot;:[&quot;vi&quot;,&quot;en&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;heroVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;A&quot;,&quot;options&quot;:[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;showProposalIntro&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const root = document.getElementById('a2root');
+    if (!root) return;
+    this.root = root;
+    const P = this.props || {};
+
+    // ----- i18n -----
+    this.T = {
+      'nav.about':'About','nav.location':'Location','nav.amenities':'Amenities','nav.products':'Residences','nav.floorplan':'Floor Plans','nav.docs':'Marketing Kit','nav.news':'News','nav.contact':'Contact','nav.cta':'Register',
+      'cover.desc':'Proposed layout, content flow and motion for the A2 beachfront resort website — inheriting The Grand Ho Tram ecosystem, aligned with the Maia brand language.',
+      'cover.m1':'Content zones','cover.m2':'Languages VI / EN','cover.m3':'Hero options','cover.scroll':'SCROLL',
+      'ctx.p':'A2 sits right beside Maia Resort — same developer, same golden Ho Tram coastline. The A2 website therefore inherits the proven structure, content flow and layout of Maia for a consistent identity within one ecosystem.',
+      'map.sub':'Keeping Maia\u2019s content flow, while upgrading three points for operations.',
+      'map.c1':'Replaces \u201cVR360\u201d: zone map \u2192 pick a floor \u2192 view units \u2192 open gallery. True to the building structure & unit floor plans.',
+      'map.c2':'A dedicated tab for clients & sales agents to download brochure, catalogue, leaflet and social posts.',
+      'map.c3':'A floating side rail that opens Hotline · Chat · Zalo — kept like Maia.',
+      'hero.title':'A SANCTUARY MADE FOR FAMILIES','hero.desc':'Beachfront apartments & villas facing the open ocean — living between the forest and the sea of Ho Tram.',
+      'hero.cta1':'Discover A2','hero.cta2':'Register','hero.opt':'HERO OPTION',
+      'intro.p1':'A2 is not merely a project, but a rare asset with an Ocean Front position — an unobstructed view and value that grows over time, right in the South\u2019s new luxury resort capital.',
+      'intro.s1':'Sea-view units','intro.s2':'From HCMC','intro.s3':'Private beach','intro.more':'LEARN MORE \u2192','intro.cap':'100% ocean-facing apartments',
+      'loc.sub':'Set on one of Ba Ria \u2013 Vung Tau\u2019s finest coastal roads, fully connected through new transport infrastructure.',
+      'loc.1':'To The Bluffs golf','loc.2':'To Ho Tram Strip','loc.3':'From central HCMC','loc.4':'Long Thanh Airport',
+      'ame.sub':'A synchronised amenity system: relaxation, entertainment and wellness flowing seamlessly between forest and sea.',
+      'ame.1':'2km of white sand','ame.2':'Sunset facing','ame.3':'Health & wellness','ame.4':'For young families',
+      'prod.1':'Well-appointed condotel, 100% direct sea views, multi-functional.','prod.2':'Garden villas with private pools, intimate and emotive spaces.',
+      'fp.sub':'Pick a zone \u2192 a floor \u2192 view units \u2192 open gallery. (Replaces \u201cVR360\u201d — true to unit floor plans.)',
+      'fp.units':'8 UNITS / FLOOR','fp.note':'* Demo — each tile links to the real gallery of each unit type.',
+      'doc.sub':'Quickly download brochure, catalogue, leaflet and social media images for sales use.',
+      'doc.1':'A2 overview · 24 pages','doc.2':'Pricing & unit plans','doc.3':'Social media image set',
+      'news.all':'VIEW ALL \u2192','news.1':'A2 to launch in the South\u2019s tourism capital','news.2':'The Grand Ho Tram raises luxury resort standards','news.3':'Nature-inspired architecture at A2',
+      'form.sub':'Leave your details to receive the latest pricing, policies and project documents.',
+      'form.name':'Full name','form.phone':'Phone number','form.email':'Email','form.msg':'What you\u2019re interested in','form.send':'SEND NOW','form.ok':'\u2713 Thank you! We\u2019ll be in touch shortly.',
+      'ft.tag':'A2 beachfront resort district — where the forest meets the sea, made for families.',
+      'ft.demo':'Proposal demo — © 2026 A2 Project. Placeholder imagery.'
+    };
+    this.cur = 'vi';
+    this.orig = new Map();
+    this.origPh = new Map();
+    root.querySelectorAll('[data-i18n]').forEach((el,i)=>{ this.orig.set(el, el.textContent); });
+    root.querySelectorAll('[data-i18n-ph]').forEach((el)=>{ this.origPh.set(el, el.getAttribute('placeholder')); });
+
+    // ----- reveal on scroll (rect-based, robust across embed contexts) -----
+    const rvEls = Array.from(root.querySelectorAll('.rv'));
+    const tween = (el)=>{
+      el.style.setProperty('transition','none','important');
+      el.style.setProperty('animation','none','important');
+      const start = performance.now(), dur = 720;
+      const step = (now)=>{
+        const p = Math.min(1,(now-start)/dur);
+        const e = 1-Math.pow(1-p,3);
+        el.style.opacity = String(e);
+        el.style.transform = 'translateY('+((1-e)*28).toFixed(2)+'px)';
+        if(p<1) requestAnimationFrame(step);
+        else { el.style.opacity='1'; el.style.transform='none'; }
+      };
+      requestAnimationFrame(step);
+    };
+    const revealPass = ()=>{
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      for(let i=rvEls.length-1;i>=0;i--){
+        const el = rvEls[i];
+        const r = el.getBoundingClientRect();
+        if(r.top < vh*0.92 && r.bottom > 0){ tween(el); rvEls.splice(i,1); }
+      }
+    };
+    this._revealPass = revealPass;
+    revealPass();
+    setTimeout(revealPass, 60);
+
+    // ----- nav scroll state -----
+    const nav = document.getElementById('a2nav');
+    const onScroll = ()=>{
+      const solid = window.scrollY > 80;
+      if (solid){
+        nav.style.background='rgba(246,243,236,.95)';
+        nav.style.boxShadow='0 1px 0 rgba(35,59,42,.08)';
+        nav.style.color='#233B2A';
+        nav.style.padding='12px clamp(20px,4vw,56px)';
+        nav.querySelectorAll('.navsub').forEach(s=>s.style.opacity='.6');
+      } else {
+        nav.style.background='transparent';
+        nav.style.boxShadow='none';
+        nav.style.color='#fff';
+        nav.style.padding='18px clamp(20px,4vw,56px)';
+      }
+      if(this._revealPass) this._revealPass();
+      // parallax
+      root.querySelectorAll('[data-parallax]').forEach(el=>{
+        const f = parseFloat(el.getAttribute('data-parallax'))||0;
+        const r = el.getBoundingClientRect();
+        const off = (r.top + r.height/2 - window.innerHeight/2) * -f;
+        el.style.transform = 'translateY('+off.toFixed(1)+'px)';
+      });
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    // ----- hero carousel -----
+    this.hi = 0;
+    const slides = root.querySelectorAll('#heroA .hslide');
+    const dots = root.querySelectorAll('#hdots [data-dot]');
+    const goSlide = (n)=>{
+      this.hi = (n+slides.length)%slides.length;
+      slides.forEach((s,i)=>s.style.opacity = i===this.hi?'1':'0');
+      dots.forEach((d,i)=>d.style.background = i===this.hi?'#fff':'rgba(255,255,255,.45)');
+    };
+    this.heroTimer = setInterval(()=>goSlide(this.hi+1), 4500);
+    dots.forEach((d)=>d.addEventListener('click',()=>{ goSlide(+d.getAttribute('data-dot')); }));
+
+    // ----- floor plan data -----
+    const zones = {
+      HT:{name:'A2 Tower', floors:25, units:8, label:'CĂN / TẦNG'},
+      VL:{name:'Biệt thự biển', floors:3, units:6, label:'CĂN / DÃY'},
+      AM:{name:'Khối tiện ích', floors:4, units:5, label:'KHU / TẦNG'}
+    };
+    let curZone='HT', curFloor=12;
+    const floorsBox = document.getElementById('floors');
+    const fpGrid = document.getElementById('fpGrid');
+    const fpTitle = document.getElementById('fpTitle');
+    const fpMeta = document.getElementById('fpMeta');
+    const imgs=['apt-2br-living.jpg','apt-1br-a.jpg','apt-1br-b.jpg','apt-bedroom.jpg','apt-studio.png','balcony-view.jpg'];
+    const amItems=[{img:'pool.jpg',name:'Hồ bơi vô cực'},{img:'kid-club.jpg',name:'Khu vui chơi'},{img:'food-court.jpg',name:'Nhà hàng'},{img:'function-1.jpg',name:'Phòng gym'},{img:'lobby.jpg',name:'Spa & Clubhouse'}];
+    const renderFloors=()=>{
+      const z=zones[curZone];
+      floorsBox.innerHTML='';
+      for(let f=z.floors; f>=1; f--){
+        const b=document.createElement('button');
+        b.textContent=f;
+        b.style.cssText='cursor:pointer;width:36px;height:30px;border-radius:2px;font:700 12px/1 "Zona Pro";border:1px solid '+(f===curFloor?'#9CAD5F':'rgba(246,243,236,.2)')+';background:'+(f===curFloor?'#9CAD5F':'transparent')+';color:'+(f===curFloor?'#233B2A':'rgba(246,243,236,.8)');
+        b.addEventListener('click',()=>{ curFloor=f; renderFloors(); renderGrid(); });
+        floorsBox.appendChild(b);
+      }
+    };
+    const renderGrid=()=>{
+      const z=zones[curZone];
+      fpTitle.textContent=z.name+' — '+(curZone==='HT'?'Tầng '+curFloor:(curZone==='VL'?'Dãy '+curFloor:'Khu '+curFloor));
+      fpMeta.textContent=z.units+' '+z.label;
+      fpGrid.innerHTML='';
+      for(let i=0;i<z.units;i++){
+        const c=document.createElement('div');
+        c.style.cssText='cursor:pointer;position:relative;aspect-ratio:1/1;border-radius:3px;overflow:hidden;transition:transform .3s';
+        const am=curZone==='AM';
+        const gsrc=am?amItems[i%amItems.length].img:imgs[i%imgs.length];
+        const gtag=am?amItems[i%amItems.length].name:(curZone+String(curFloor).padStart(2,'0')+'-'+String(i+1).padStart(2,'0'));
+        c.innerHTML='<img src="assets/img/'+gsrc+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(20,38,26,.72))"></div><span style="position:absolute;left:8px;bottom:7px;right:8px;font:700 '+(am?'11px':'10px')+'/1.2 \'Zona Pro\';color:#fff">'+gtag+'</span>';
+        c.addEventListener('mouseenter',()=>c.style.transform='scale(.96)');
+        c.addEventListener('mouseleave',()=>c.style.transform='none');
+        c.addEventListener('click',()=>this.toast(this.cur==='en'?'Opening gallery for this unit…':'Đang mở gallery cho căn này…'));
+        fpGrid.appendChild(c);
+      }
+    };
+
+    // ----- delegated clicks -----
+    root.addEventListener('click',(ev)=>{
+      const t = ev.target.closest('[data-action]');
+      if(!t) return;
+      const a = t.getAttribute('data-action');
+      if(a==='lang'){ this.setLang(t.getAttribute('data-lang')); }
+      else if(a==='hero'){ this.setHero(t.getAttribute('data-hero')); }
+      else if(a==='contact-toggle'){ this.toggleContact(); }
+      else if(a==='floor-zone'){
+        curZone=t.getAttribute('data-zone');
+        root.querySelectorAll('#zones .zone').forEach(z=>{ z.style.border='1px solid rgba(246,243,236,.18)'; z.style.background='transparent'; });
+        t.style.border='1px solid #9CAD5F'; t.style.background='rgba(156,173,95,.14)';
+        curFloor = Math.min(curFloor, zones[curZone].floors);
+        renderFloors(); renderGrid();
+      }
+      else if(a==='doc'){ ev.preventDefault(); this.toast(this.cur==='en'?'Demo — the file will download here.':'Bản demo — tài liệu sẽ tải về tại đây.'); }
+    });
+
+    // form submit
+    const form = root.querySelector('[data-action="form"]');
+    if(form){ form.addEventListener('submit',(e)=>{ e.preventDefault(); form.style.display='none'; const ok=document.getElementById('formOk'); if(ok) ok.style.display='block'; }); }
+
+    renderFloors(); renderGrid();
+
+    // apply props
+    if(P.showProposalIntro===false){ const f=document.getElementById('introframes'); if(f) f.style.display='none'; }
+    if(P.heroVariant && P.heroVariant!=='A'){ this.setHero(P.heroVariant); }
+    if(P.lang==='en'){ this.setLang('en'); }
+  }
+
+  setLang(lang){
+    if(lang===this.cur) return;
+    this.cur = lang;
+    this.orig.forEach((vi, el)=>{
+      const k = el.getAttribute('data-i18n');
+      if(lang==='en'){ el.textContent = this.T[k] || vi; }
+      else { el.textContent = vi; }
+    });
+    this.origPh.forEach((vi, el)=>{
+      const k = el.getAttribute('data-i18n-ph');
+      el.setAttribute('placeholder', lang==='en' ? (this.T[k]||vi) : vi);
+    });
+    this.root.querySelectorAll('[data-action="lang"]').forEach(b=>{
+      b.style.opacity = b.getAttribute('data-lang')===lang ? '1' : '.55';
+    });
+  }
+
+  setHero(v){
+    ['A','B','C'].forEach(x=>{
+      const el = document.getElementById('hero'+x);
+      if(el) el.style.display = x===v ? (x==='B'?'block':'block') : 'none';
+    });
+    this.root.querySelectorAll('[data-action="hero"]').forEach(b=>{
+      const on = b.getAttribute('data-hero')===v;
+      b.style.background = on ? '#fff' : 'transparent';
+      b.style.color = on ? '#36573B' : '#fff';
+    });
+    if(v==='A' && !this.heroTimer){ /* keep */ }
+  }
+
+  toggleContact(){
+    const items = document.getElementById('contactItems');
+    const fab = document.getElementById('contactFab');
+    const open = items.style.display==='flex';
+    items.style.display = open ? 'none' : 'flex';
+    fab.style.transform = open ? 'rotate(0deg)' : 'rotate(135deg)';
+    fab.style.background = open ? '#36573B' : '#B7995A';
+    const icon = document.getElementById('fabIcon');
+    if(icon) icon.innerHTML = open
+      ? '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>'
+      : '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>';
+  }
+
+  toast(msg){
+    let t = document.getElementById('a2toast');
+    if(!t){ t=document.createElement('div'); t.id='a2toast'; t.style.cssText='position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);background:#233B2A;color:#fff;padding:13px 22px;border-radius:3px;font:600 13px/1 "Zona Pro";z-index:90;box-shadow:0 12px 30px rgba(0,0,0,.3);opacity:0;transition:opacity .3s,transform .3s;pointer-events:none'; document.body.appendChild(t); }
+    t.textContent=msg;
+    requestAnimationFrame(()=>{ t.style.opacity='1'; t.style.transform='translateX(-50%) translateY(0)'; });
+    clearTimeout(this._tt); this._tt=setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(20px)'; }, 2200);
+  }
+
+  componentWillUnmount(){ clearInterval(this.heroTimer); }
+}
+</script>
+</body>
+</html>
